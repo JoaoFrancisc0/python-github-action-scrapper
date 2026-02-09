@@ -4,13 +4,19 @@ from utils.helpers import normalizar
 import time
 
 PLATAFORMAS = {
-    "PlayStation 4": ["ps4", "playstation4", "playstation 4", "playstation-4"],
-    "PlayStation 5": ["ps5", "playstation5", "playstation 5", "playstation-5"]
+    "PlayStation 4": ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4"],
+    "PlayStation 5": ["ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5"]
 }
 
-FILTRO = ["ps4", "playstation4", "playstation 4", "playstation-4",
-          "ps5", "playstation5", "playstation 5", "playstation-5",
-          "edicao padrao", "edicao standard", "hits"]
+FILTRO = ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4",
+          "ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5",
+          "edicao padrao", "padrao", "edicao standard", "edition standard", "standard edition", "standardedition", 
+          "physical edition", "midia fisica", "wireless", "controller", 
+          "jogo", "video game", "compativel com", "playstation", "hits", " -", "- "]
+
+BLACK_LIST = ["suporte", "ventoinha", "base", "grip", "joystick", "silicone", "carregador", "carregamento", "limpeza", "protector",
+              "capa", "protetora", "usb", "transporte", "card", "charging", "carrying", "reposicao", "botoes", "thumbsticks",
+              "gaming", "paddles", "replacement", "cabo", "cooler", "estojo", "waterproof", "armazenamento", "display", "buttons "]
 
 def scrap_lista_produtos(page, paginas):
     paginas-=1
@@ -76,7 +82,7 @@ def parse_lista_produtos(page):
                     "preco": limpar_preco(preco_cru),
                 }
                 
-                if not dados["plataforma"]:
+                if not dados.get("nome") or not dados.get("plataforma") or not dados.get("preco"):
                     continue
                 
                 resultados.append(dados)
@@ -97,6 +103,10 @@ def limpar_nome(texto_nome):
 
     if nome_tratado.endswith("-"):
         nome_tratado = nome_tratado[:-1].strip()
+
+    for palavra in BLACK_LIST:
+        if palavra in nome_tratado:
+            return None
 
     return nome_tratado
 
