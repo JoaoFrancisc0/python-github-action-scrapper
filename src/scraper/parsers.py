@@ -22,7 +22,7 @@ def scrap_lista_produtos(page, paginas):
     paginas-=1
     resultados_total = []
     while(paginas > 0):
-        resultados = parse_lista_produtos(page)
+        resultados = parse_lista_produtos(page, timeout=1000)
         resultados_total.extend(resultados)
         if not avancar_pagina(page):
             if not avancar_pagina(page):
@@ -39,7 +39,7 @@ def avancar_pagina(page):
         logging.error(f"Erro ao avançar página: {e}")
         return False
 
-def parse_lista_produtos(page):
+def parse_lista_produtos(page, timeout):
     """
     Extrai informações de múltiplos itens de uma página de listagem.
     """
@@ -69,12 +69,12 @@ def parse_lista_produtos(page):
                 sub_items.append(secondary_item)
 
             for sub_item in sub_items:
-                nome_cru = item.locator("h2 span").inner_text(timeout=2000)
+                nome_cru = item.locator("h2 span").inner_text(timeout=timeout)
                 try:
-                    plataforma_cru = sub_item.locator("[class='a-size-base a-link-normal s-underline-text s-underline-link-text null s-link-style a-text-bold']").inner_text(timeout=2000)
+                    plataforma_cru = sub_item.locator("[class='a-size-base a-link-normal s-underline-text s-underline-link-text null s-link-style a-text-bold']").inner_text(timeout=timeout)
                 except:
                     plataforma_cru = "Sem Sistema Operacional"
-                preco_cru = sub_item.locator("[class='a-offscreen']").first.inner_text(timeout=2000)
+                preco_cru = sub_item.locator("[class='a-offscreen']").first.inner_text(timeout=timeout)
 
                 dados = {
                     "nome": limpar_nome(nome_cru),
