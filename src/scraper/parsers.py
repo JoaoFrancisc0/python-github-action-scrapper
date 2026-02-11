@@ -63,6 +63,7 @@ def parse_lista_produtos(page, timeout):
                     "nome": tratar_nome(nome_cru),
                     "plataforma": tratar_plataforma(plataforma_cru, nome_cru),
                     "preco": tratar_preco(preco_cru),
+                    "updated": tratar_updated()
                 }
                 
                 if not dados.get("nome") or not dados.get("plataforma") or not dados.get("preco"):

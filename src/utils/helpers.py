@@ -62,3 +62,8 @@ def tratar_preco(texto_preco):
         return float(limpo.replace(",", "."))
     except ValueError:
         return False
+    
+def tratar_updated():
+    data = datetime.now()
+    data_formatada = data.strftime("%d/%m/%Y %H:%M:%S")
+    return data_formatada
