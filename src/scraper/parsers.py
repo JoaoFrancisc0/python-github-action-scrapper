@@ -1,5 +1,5 @@
 import logging
-from utils.helpers import tratar_nome, tratar_plataforma, tratar_preco, tratar_updated
+from utils.helpers import remover_duplicatas, tratar_nome, tratar_plataforma, tratar_preco, tratar_updated
 
 def scrap_lista_produtos(page, paginas):
     paginas-=1
@@ -11,7 +11,8 @@ def scrap_lista_produtos(page, paginas):
             if not avancar_pagina(page):
                return resultados_total
         paginas-=1
-    return resultados_total
+    resultado_tratado = remover_duplicatas(resultados_total)
+    return resultado_tratado
 
 def avancar_pagina(page):
     try:

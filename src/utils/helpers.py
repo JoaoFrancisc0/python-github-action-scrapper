@@ -16,6 +16,17 @@ BLACK_LIST = ["suporte", "ventoinha", "base", "grip", "joystick", "silicone", "c
               "capa", "protetora", "usb", "transporte", "card", "charging", "carrying", "reposicao", "botoes", "thumbsticks",
               "gaming", "paddles", "replacement", "cabo", "cooler", "estojo", "waterproof", "armazenamento", "display", "buttons "]
 
+def remover_duplicatas(produtos):
+    menores = {}
+
+    for p in produtos:
+        chave = (p["nome"], p["plataforma"])
+
+        if chave not in menores or p["preco"] < menores[chave]["preco"]:
+            menores[chave] = p
+
+    return list(menores.values())
+
 def normalizar(texto):
     '''a-z, 0-9, espaço, -'''
     texto = texto.lower()
