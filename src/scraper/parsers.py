@@ -1,22 +1,5 @@
 import logging
-import re
-from utils.helpers import normalizar
-import time
-
-PLATAFORMAS = {
-    "PlayStation 4": ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4"],
-    "PlayStation 5": ["ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5"]
-}
-
-FILTRO = ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4",
-          "ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5",
-          "edicao padrao", "padrao", "edicao standard", "edition standard", "standard edition", "standardedition", 
-          "physical edition", "midia fisica", "wireless", "controller", 
-          "jogo", "video game", "compativel com", "playstation", "hits", " -", "- "]
-
-BLACK_LIST = ["suporte", "ventoinha", "base", "grip", "joystick", "silicone", "carregador", "carregamento", "limpeza", "protector",
-              "capa", "protetora", "usb", "transporte", "card", "charging", "carrying", "reposicao", "botoes", "thumbsticks",
-              "gaming", "paddles", "replacement", "cabo", "cooler", "estojo", "waterproof", "armazenamento", "display", "buttons "]
+from utils.helpers import tratar_nome, tratar_plataforma, tratar_preco, tratar_updated
 
 def scrap_lista_produtos(page, paginas):
     paginas-=1
@@ -77,9 +60,9 @@ def parse_lista_produtos(page, timeout):
                 preco_cru = sub_item.locator("[class='a-offscreen']").first.inner_text(timeout=timeout)
 
                 dados = {
-                    "nome": limpar_nome(nome_cru),
-                    "plataforma": limpar_plataforma(plataforma_cru, nome_cru),
-                    "preco": limpar_preco(preco_cru),
+                    "nome": tratar_nome(nome_cru),
+                    "plataforma": tratar_plataforma(plataforma_cru, nome_cru),
+                    "preco": tratar_preco(preco_cru),
                 }
                 
                 if not dados.get("nome") or not dados.get("plataforma") or not dados.get("preco"):
@@ -91,42 +74,3 @@ def parse_lista_produtos(page, timeout):
             logging.error(f"Erro ao extrair dados de um item específico: {e}")
             continue
     return resultados
-
-def limpar_nome(texto_nome):
-    nome_tratado = normalizar(texto_nome)
-    
-    for v in FILTRO:
-        padrao = r"\b" + re.escape(v) + r"\b"
-        nome_tratado = re.sub(padrao, "", nome_tratado)
-
-    nome_tratado = " ".join(nome_tratado.split())
-
-    if nome_tratado.endswith("-"):
-        nome_tratado = nome_tratado[:-1].strip()
-
-    for palavra in BLACK_LIST:
-        if palavra in nome_tratado:
-            return None
-
-    return nome_tratado
-
-def limpar_plataforma(texto_plataforma, texto_nome):
-    if texto_plataforma == "Sem Sistema Operacional":
-        nome_tratado = normalizar(texto_nome)
-        for plataforma, valores in PLATAFORMAS.items():
-            for v in valores:
-                if v in nome_tratado:
-                    return plataforma
-        return texto_plataforma
-    elif texto_plataforma == "PlayStation 4" or texto_plataforma == "PlayStation 5":
-        return texto_plataforma
-    else:
-        return None
-
-def limpar_preco(texto_preco):
-    try:
-        # Mantém apenas numeros e virgula
-        limpo = re.sub(r"[^0-9,]", "", texto_preco)
-        return float(limpo.replace(",", "."))
-    except ValueError:
-        return False
