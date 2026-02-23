@@ -65,6 +65,12 @@ def tratar_plataforma(texto_plataforma, texto_nome):
         return texto_plataforma
     else:
         return None
+    
+def tratar_key(texto_nome, texto_plataforma, texto_loja):
+    if not texto_nome or not texto_plataforma or not texto_loja:
+        return None
+    else:
+        return f"{texto_nome}_{texto_plataforma}_{texto_loja}"
 
 def tratar_preco(texto_preco):
     try:
