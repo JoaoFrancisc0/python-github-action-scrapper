@@ -84,3 +84,22 @@ def tratar_updated():
     data = datetime.now()
     data_formatada = data.strftime("%d/%m/%Y %H:%M:%S")
     return data_formatada
+
+def comparar_preco(new_data, latest_prices):
+    indice_antigo = {product["key"]: product["preco"] for product in latest_prices}
+
+    alterados = []
+
+    for product in new_data:
+        key = product["key"]
+        preco_novo = product["preco"]
+
+        if key not in indice_antigo:
+            alterados.append(product)
+
+        else:
+            preco_antigo = indice_antigo[key]
+            if preco_antigo != preco_novo:
+                alterados.append(product)
+
+    return alterados
