@@ -1,5 +1,5 @@
 import logging
-from utils.helpers import remover_duplicatas, tratar_nome, tratar_plataforma, tratar_preco, tratar_updated
+from utils.helpers import remover_duplicatas, tratar_nome, tratar_plataforma, tratar_preco, tratar_updated, tratar_key
 
 def scrap_lista_produtos(page, paginas):
     paginas-=1
@@ -60,15 +60,24 @@ def parse_lista_produtos(page, timeout):
                     plataforma_cru = "Sem Sistema Operacional"
                 preco_cru = sub_item.locator("[class='a-offscreen']").first.inner_text(timeout=timeout)
 
-                dados = {
-                    "nome": tratar_nome(nome_cru),
-                    "plataforma": tratar_plataforma(plataforma_cru, nome_cru),
-                    "preco": tratar_preco(preco_cru),
-                    "updated": tratar_updated()
-                }
+                nome = tratar_nome(nome_cru)
+                plataforma = tratar_plataforma(plataforma_cru, nome_cru)
+                preco = tratar_preco(preco_cru)
+                updated = tratar_updated()
+                loja = "amazon"
+                key = tratar_key(nome, plataforma, loja)
                 
-                if not dados.get("nome") or not dados.get("plataforma") or not dados.get("preco"):
+                if not key or not preco:
                     continue
+
+                dados = {
+                    "nome": nome,
+                    "plataforma": plataforma,
+                    "loja": loja,
+                    "preco": preco,
+                    "updated": updated,
+                    "key": key
+                }
                 
                 resultados.append(dados)
         except Exception as e:
