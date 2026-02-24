@@ -12,7 +12,7 @@ def extrair_dados():
     with sync_playwright() as p:
         logging.info("Iniciando o navegador...")
         # 'headless=True' é obrigatório para o GitHub Actions
-        browser = p.chromium.launch(headless=False) 
+        browser = p.chromium.launch(headless=True) 
         
         # O contexto permite simular resoluções de tela e User-Agents
         context = browser.new_context(
