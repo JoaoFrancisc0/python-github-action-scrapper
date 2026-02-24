@@ -35,4 +35,4 @@ jobs:
 
       - name: Rodar scrapper
         run: |
-          python main.py
+          python src/main.py
