@@ -9,6 +9,13 @@ jobs:
   run-scraper:
     runs-on: ubuntu-latest
 
+    env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
+        MONGO_COLLECTION_1: ${{ secrets.MONGO_COLLECTION_1 }}
+        MONGO_COLLECTION_2: ${{ secrets.MONGO_COLLECTION_2 }}
+        MONGO_COLLECTION_3: ${{ secrets.MONGO_COLLECTION_3 }}
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
