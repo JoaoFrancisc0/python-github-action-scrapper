@@ -36,3 +36,9 @@ jobs:
       - name: Rodar scrapper
         run: |
           python src/main.py
+          
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot
+          path: screenshot.png
