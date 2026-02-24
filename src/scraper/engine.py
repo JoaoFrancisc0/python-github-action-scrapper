@@ -23,7 +23,8 @@ def extrair_dados():
         page = context.new_page()
         
         try:
-            url = "https://www.amazon.com.br/s?k=Playstation&i=videogames&rh=n%3A7791985011%2Cp_n_condition-type%3A13862762011%2Cp_85%3A19171728011%2Cp_36%3A17270950011&s=exact-aware-popularity-rank&dc&__mk_pt_BR=ÅMÅŽÕÑ&crid=124B3UIUBDLPF&qid=1770236390&rnid=17270949011&sprefix=playstatio%2Cvideogames%2C262&xpid=1HiEmcVl4joMT&ref=sr_st_exact-aware-popularity-rank&ds=v1%3AH%2Fiq5emZLKQk2qmNYltSRZxu3Zf3RzofFuxN4p380KY"
+            # url = "https://www.amazon.com.br/s?k=Playstation&i=videogames&rh=n%3A7791985011%2Cp_n_condition-type%3A13862762011%2Cp_85%3A19171728011%2Cp_36%3A17270950011&s=exact-aware-popularity-rank&dc&__mk_pt_BR=ÅMÅŽÕÑ&crid=124B3UIUBDLPF&qid=1770236390&rnid=17270949011&sprefix=playstatio%2Cvideogames%2C262&xpid=1HiEmcVl4joMT&ref=sr_st_exact-aware-popularity-rank&ds=v1%3AH%2Fiq5emZLKQk2qmNYltSRZxu3Zf3RzofFuxN4p380KY"
+            url = "https://lista.mercadolivre.com.br/games/video-games/novo/playstation_CustoFrete_Gratis_PriceRange_0BRL-500BRL_BestSellers_YES_NoIndex_True?sb=category#applied_filter_id%3Dprice%26applied_filter_name%3DPreço%26applied_filter_order%3D15%26applied_value_id%3D*-500%26applied_value_name%3DBRL*-BRL500%26applied_value_order%3D4%26applied_value_results%3DUNKNOWN_RESULTS%26is_custom%3Dtrue"
             logging.info(f"Navegando para {url}")
             
             # wait_until="networkidle" espera o site parar de carregar scripts
