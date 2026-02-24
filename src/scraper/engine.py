@@ -1,4 +1,5 @@
 import logging
+import pandas as pd
 from playwright.sync_api import sync_playwright
 from scraper.parsers import scrap_lista_produtos
 
@@ -32,7 +33,6 @@ def extrair_dados():
             # Passamos a 'page' para o parser fazer o trabalho sujo
             dados_finais = scrap_lista_produtos(page, 50)
             
-            import pandas as pd
             df = pd.DataFrame(dados_finais)
             df.to_excel("produtos.xlsx", index=False)
 
