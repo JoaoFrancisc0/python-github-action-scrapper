@@ -1,5 +1,6 @@
 import logging
 import pandas as pd
+import os
 from playwright.sync_api import sync_playwright
 from scraper.parsers import scrap_lista_produtos
 
@@ -12,10 +13,15 @@ def extrair_dados():
     
     with sync_playwright() as p:
         logging.info("Iniciando o navegador...")
-        # 'headless=True' é obrigatório para o GitHub Actions
-        browser = p.chromium.launch(headless=True) 
-        
-        # O contexto permite simular resoluções de tela e User-Agents
+
+        proxy_config = {
+            "server": os.getenv("PROXY_SERVER"), # Atualize com a porta atual do Ngrok
+            "username": os.getenv("PROXY_USER"),
+            "password": os.getenv("PROXY_PASS")
+        }
+
+        browser = p.chromium.launch(headless=True, proxy=proxy_config)
+
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
         )
