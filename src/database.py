@@ -1,13 +1,8 @@
-import os
-import logging
-import copy
-from dotenv import load_dotenv
+import os, logging, copy
 from pymongo import MongoClient, UpdateOne
 from pymongo.errors import ConnectionFailure
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-
-load_dotenv()
 
 _client = None
 

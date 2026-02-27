@@ -1,7 +1,8 @@
 from scraper.engine import extrair_dados
 from utils.helpers import comparar_preco
 from database import upsert_collection1, insert_collection2, upsert_collection3, read_collection3
-import logging
+import logging, time
+from dotenv import load_dotenv
 
 def storage_data(dados):
     latest_prices = read_collection3()
@@ -24,7 +25,7 @@ def run():
         logging.warning("Nenhum dado foi coletado para salvar.")
 
 if __name__ == "__main__":
-    import time
+    load_dotenv()
     inicio = time.time()
     run()
-    print(f"Demorou: {round(time.time() - inicio, 2)} segundos")
+    logging.info(f"Demorou: {round(time.time() - inicio, 2)} segundos")
