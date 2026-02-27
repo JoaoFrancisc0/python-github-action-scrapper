@@ -2,8 +2,8 @@ import unicodedata, re
 from datetime import datetime
 
 PLATAFORMAS = {
-    "PlayStation 4": ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4"],
-    "PlayStation 5": ["ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5"]
+    "PlayStation-4": ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4"],
+    "PlayStation-5": ["ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5"]
 }
 
 FILTRO = ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4",
@@ -53,7 +53,7 @@ def tratar_nome(texto_nome):
 
     return nome_tratado
 
-def tratar_plataforma(texto_plataforma, texto_nome):
+def tratar_plataforma(texto_nome, texto_plataforma="Sem Sistema Operacional"):
     if texto_plataforma == "Sem Sistema Operacional":
         nome_tratado = normalizar(texto_nome)
         for plataforma, valores in PLATAFORMAS.items():
@@ -62,6 +62,7 @@ def tratar_plataforma(texto_plataforma, texto_nome):
                     return plataforma
         return texto_plataforma
     elif texto_plataforma == "PlayStation 4" or texto_plataforma == "PlayStation 5":
+        texto_plataforma = texto_plataforma.replace(" ", "-")
         return texto_plataforma
     else:
         return None
