@@ -65,7 +65,11 @@ def tratar_plataforma(texto_plataforma, texto_nome):
         return texto_plataforma
     else:
         return None
-    
+
+def tratar_href(texto_href_cru, loja_url=""):
+    texto_href = loja_url + texto_href_cru
+    return texto_href
+
 def tratar_key(texto_nome, texto_plataforma, texto_loja):
     if not texto_nome or not texto_plataforma or not texto_loja:
         return None
