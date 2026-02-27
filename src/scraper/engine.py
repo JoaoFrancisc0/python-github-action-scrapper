@@ -13,7 +13,7 @@ def extrair_dados():
         logging.info("Iniciando o navegador...")
 
         proxy_config = {
-            "server": os.getenv("PROXY_SERVER"), # Atualize com a porta atual do Ngrok
+            "server": "http://0.tcp.sa.ngrok.io:18395", # Atualize com a porta atual do Ngrok
             "username": os.getenv("PROXY_USER"),
             "password": os.getenv("PROXY_PASS")
         }
