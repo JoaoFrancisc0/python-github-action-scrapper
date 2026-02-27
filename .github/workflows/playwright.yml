@@ -15,6 +15,9 @@ jobs:
         MONGO_COLLECTION_1: ${{ secrets.MONGO_COLLECTION_1 }}
         MONGO_COLLECTION_2: ${{ secrets.MONGO_COLLECTION_2 }}
         MONGO_COLLECTION_3: ${{ secrets.MONGO_COLLECTION_3 }}
+        PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
+        PROXY_USER: ${{ secrets.PROXY_USER }}
+        PROXY_PASS: ${{ secrets.PROXY_PASS }}
 
     steps:
       - name: Checkout do código
