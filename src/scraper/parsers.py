@@ -6,7 +6,7 @@ def scrap_lista_produtos(page, paginas):
     paginas-=1
     resultados_total = []
     while(paginas > 0):
-        resultados = parse_lista_produtos(page, timeout=1000)
+        resultados = parse_produtos_amazon(page, timeout=1000)
         resultados_total.extend(resultados)
         if not avancar_pagina(page):
             if not avancar_pagina(page):
@@ -24,10 +24,7 @@ def avancar_pagina(page):
         logging.error(f"Erro ao avançar página: {e}")
         return False
 
-def parse_lista_produtos(page, timeout):
-    """
-    Extrai informações de múltiplos itens de uma página de listagem.
-    """
+def parse_produtos_amazon(page, timeout):
     resultados = []
     
     try:
@@ -88,6 +85,78 @@ def parse_lista_produtos(page, timeout):
                 }
                 
                 resultados.append(dados)
+        except Exception as e:
+            # Se um item falhar, logamos o erro mas continuamos para o próximo
+            logging.error(f"Erro ao extrair dados de um item específico: {e}")
+            continue
+    return resultados
+
+def scrap_lista_produtos_ml(page, paginas):
+    page.screenshot(path="screenshot.png")
+    paginas-=1
+    resultados_total = []
+    while(paginas > 0):
+        resultados = parse_produtos_ml(page, timeout=1000)
+        resultados_total.extend(resultados)
+        if not avancar_pagina_ml(page):
+            if not avancar_pagina_ml(page):
+               return resultados_total
+        paginas-=1
+    resultado_tratado = remover_duplicatas(resultados_total)
+    return resultado_tratado
+
+def avancar_pagina_ml(page):
+    try:
+        button = page.locator("[data-andes-pagination-control='next']")
+        button.click()
+        return True
+    except Exception as e:
+        logging.error(f"Erro ao avançar página: {e}")
+        return False
+
+def parse_produtos_ml(page, timeout):
+    resultados = []
+    
+    # try:
+    #     page.wait_for_selector("[class='s-main-slot s-result-list s-search-results sg-row']", timeout=10000)
+    # except Exception:
+    #     logging.warning("O container de resultados não foi encontrado a tempo.")
+    #     return []
+
+    items = page.locator(".ui-search-layout__item").all()
+    
+    for item in items:
+        try:
+            nome_cru = item.locator(".poly-component__title").first.inner_text(timeout=timeout)
+            preco_cru = item.locator(".andes-money-amount__fraction").first.inner_text(timeout=timeout)
+
+            try:
+                href_cru = item.locator(".poly-component__title").first.get_attribute("href", timeout=timeout)
+            except:
+                href_cru = "https://www.mercadolivre.com.br"
+
+            nome = tratar_nome(nome_cru)
+            plataforma = tratar_plataforma(nome_cru)
+            href = tratar_href(href_cru)
+            preco = tratar_preco(preco_cru)
+            updated = tratar_updated()
+            loja = "ml"
+            key = tratar_key(nome, plataforma, loja)
+            
+            if not key or not preco:
+                continue
+
+            dados = {
+                "nome": nome,
+                "plataforma": plataforma,
+                "href": href,
+                "loja": loja,
+                "preco": preco,
+                "updated": updated,
+                "key": key
+            }
+            
+            resultados.append(dados)
         except Exception as e:
             # Se um item falhar, logamos o erro mas continuamos para o próximo
             logging.error(f"Erro ao extrair dados de um item específico: {e}")
