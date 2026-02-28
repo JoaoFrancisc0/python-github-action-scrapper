@@ -12,13 +12,15 @@ def extrair_dados():
     with sync_playwright() as p:
         logging.info("Iniciando o navegador...")
 
-        proxy_config = {
-            "server": "http://0.tcp.sa.ngrok.io:18395", # Atualize com a porta atual do Ngrok
-            "username": os.getenv("PROXY_USER"),
-            "password": os.getenv("PROXY_PASS")
-        }
+        # proxy_config = {
+        #     "server": "http://0.tcp.sa.ngrok.io:18395", # Atualize com a porta atual do Ngrok
+        #     "username": os.getenv("PROXY_USER"),
+        #     "password": os.getenv("PROXY_PASS")
+        # }
 
-        browser = p.chromium.launch(headless=True, proxy=proxy_config)
+        # browser = p.chromium.launch(headless=True, proxy=proxy_config)
+
+        browser = p.chromium.launch(headless=True)
 
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
