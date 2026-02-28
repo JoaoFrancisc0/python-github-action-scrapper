@@ -9,12 +9,14 @@ PLATAFORMAS = {
 FILTRO = ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4",
           "ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5",
           "edicao padrao", "padrao", "edicao standard", "edition standard", "standard edition", "standardedition", 
-          "physical edition", "midia fisica", "wireless", "controller", 
-          "jogo", "video game", "compativel com", "playstation", "hits", " -", "- "]
+          "physical edition", "midia fisica", "fisico", "lacrado", "wireless", "controller", 
+          "jogo", "video game", "compativel com", "playstation", "hits", " -", "- ", "sony", 
+          "pt-br", "pronta entrega"]
 
 BLACK_LIST = ["suporte", "ventoinha", "base", "grip", "joystick", "silicone", "carregador", "carregamento", "limpeza", "protector",
               "capa", "protetora", "usb", "transporte", "card", "charging", "carrying", "reposicao", "botoes", "thumbsticks",
-              "gaming", "paddles", "replacement", "cabo", "cooler", "estojo", "waterproof", "armazenamento", "display", "buttons "]
+              "gaming", "paddles", "replacement", "cabo", "cooler", "estojo", "waterproof", "armazenamento", "display", "buttons",
+              "nintendo", "ps3", "ps2", "psp", "xbox"]
 
 def remover_duplicatas(produtos):
     menores = {}
