@@ -1,8 +1,8 @@
 name: Playwright Action Scrapper
 
 on:
-  schedule:
-    - cron: "0 */12 * * *"   # roda a cada 6 horas (opcional)
+  # schedule:
+    # - cron: "0 */12 * * *"   # roda a cada 6 horas (opcional)
   workflow_dispatch:        # permite rodar manualmente
 
 jobs:
