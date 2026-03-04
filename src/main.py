@@ -1,5 +1,5 @@
 from scraper.engine import extrair_dados
-from utils.helpers import comparar_preco
+from utils.product_logic import comparar_preco
 from database import upsert_collection1, insert_collection2, upsert_collection3, read_collection3
 import logging, time
 from dotenv import load_dotenv
