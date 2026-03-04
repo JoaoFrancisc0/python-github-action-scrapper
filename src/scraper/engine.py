@@ -1,5 +1,4 @@
 import logging, random
-import pandas as pd
 from playwright.sync_api import sync_playwright
 from scraper.parsers import scrap_lista_produtos, scrap_lista_produtos_ml
 
@@ -56,9 +55,6 @@ def extrair_dados():
             logging.info(f"Extração mercado livre concluída. {len(dados_ml)} itens encontrados.")
             
             dados_finais = dados_amazon + dados_ml
-
-            df = pd.DataFrame(dados_finais)
-            df.to_excel("produtos.xlsx", index=False)
 
             logging.info(f"Extração concluída. {len(dados_finais)} itens encontrados.")
             
