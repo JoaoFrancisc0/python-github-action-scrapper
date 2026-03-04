@@ -2,8 +2,7 @@ import logging
 from utils.formatters import tratar_nome, tratar_plataforma, tratar_href, tratar_url_imagem, tratar_preco, tratar_updated, tratar_key
 from utils.product_logic import remover_duplicatas
 
-def scrap_lista_produtos(page, paginas):
-    page.screenshot(path="screenshot.png")
+def scrap_lista_produtos(page, paginas=10000):
     paginas-=1
     resultados_total = []
     while(paginas > 0):
@@ -12,7 +11,7 @@ def scrap_lista_produtos(page, paginas):
         if not avancar_pagina(page):
             if not avancar_pagina(page):
                return resultados_total
-        paginas-=1
+        # paginas-=1
     resultado_tratado = remover_duplicatas(resultados_total)
     return resultado_tratado
 
@@ -21,8 +20,8 @@ def avancar_pagina(page):
         button = page.locator('xpath=//*[@role="button"  and normalize-space(text())="Próximo"]')
         button.click()
         return True
-    except Exception as e:
-        logging.error(f"Erro ao avançar página: {e}")
+    except:
+        logging.error(f"Erro ao avançar página")
         return False
 
 def parse_produtos_amazon(page, timeout):
@@ -105,8 +104,7 @@ def parse_produtos_amazon(page, timeout):
     logging.info(f"Produtos coletados na página: {len(resultados)}")
     return resultados
 
-def scrap_lista_produtos_ml(page, paginas):
-    page.screenshot(path="screenshot.png")
+def scrap_lista_produtos_ml(page, paginas=10000):
     paginas-=1
     resultados_total = []
     while(paginas > 0):
@@ -115,7 +113,7 @@ def scrap_lista_produtos_ml(page, paginas):
         if not avancar_pagina_ml(page):
             if not avancar_pagina_ml(page):
                return resultados_total
-        paginas-=1
+        # paginas-=1
     resultado_tratado = remover_duplicatas(resultados_total)
     return resultado_tratado
 
@@ -124,8 +122,8 @@ def avancar_pagina_ml(page):
         button = page.locator("[data-andes-pagination-control='next']")
         button.click()
         return True
-    except Exception as e:
-        logging.error(f"Erro ao avançar página: {e}")
+    except:
+        logging.error(f"Erro ao avançar página")
         return False
 
 def parse_produtos_ml(page, timeout):

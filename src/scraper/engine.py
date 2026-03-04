@@ -47,12 +47,12 @@ def extrair_dados():
         try:
             logging.info(f"Navegando para {url_amazon}")
             page.goto(url_amazon, timeout=60000)
-            dados_amazon = scrap_lista_produtos(page, 51)
+            dados_amazon = scrap_lista_produtos(page)
             logging.info(f"Extração amazon concluída. {len(dados_amazon)} itens encontrados.")
 
             logging.info(f"Navegando para {url_ml}")
             page.goto(url_ml, timeout=60000)
-            dados_ml = scrap_lista_produtos_ml(page, 100)
+            dados_ml = scrap_lista_produtos_ml(page)
             logging.info(f"Extração mercado livre concluída. {len(dados_ml)} itens encontrados.")
             
             dados_finais = dados_amazon + dados_ml
