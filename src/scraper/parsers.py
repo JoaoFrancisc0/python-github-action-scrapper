@@ -78,10 +78,11 @@ def parse_produtos_amazon(page, timeout):
                     raise
                 nome = tratar_nome(nome_cru)
                 plataforma = tratar_plataforma(nome_cru, plataforma_cru)
-                href = tratar_href(href_cru, "www.amazon.com.br")
+                url_imagem = tratar_url_imagem(url_imagem_cru)
+                loja = 1 # == "amazon"
+                href = tratar_href(href_cru, loja)
                 preco = tratar_preco(preco_cru)
                 updated = tratar_updated()
-                loja = "amazon"
                 key = tratar_key(nome, plataforma, loja)
                 
                 if not key or not preco:
@@ -90,8 +91,9 @@ def parse_produtos_amazon(page, timeout):
                 dados = {
                     "nome": nome,
                     "plataforma": plataforma,
-                    "href": href,
+                    "url_imagem": url_imagem,
                     "loja": loja,
+                    "href": href,
                     "preco": preco,
                     "updated": updated,
                     "key": key
@@ -157,14 +159,15 @@ def parse_produtos_ml(page, timeout):
             try:
                 href_cru = item.locator(".poly-component__title").first.get_attribute("href", timeout=timeout)
             except:
-                href_cru = "https://www.mercadolivre.com.br"
+                href_cru = ""
 
             nome = tratar_nome(nome_cru)
             plataforma = tratar_plataforma(nome_cru)
-            href = tratar_href(href_cru)
+            url_imagem = tratar_url_imagem(url_imagem_cru)
+            loja = 2 # == "ml"
+            href = tratar_href(href_cru, loja)
             preco = tratar_preco(preco_cru)
             updated = tratar_updated()
-            loja = "ml"
             key = tratar_key(nome, plataforma, loja)
             
             if not key or not preco:
@@ -173,8 +176,9 @@ def parse_produtos_ml(page, timeout):
             dados = {
                 "nome": nome,
                 "plataforma": plataforma,
-                "href": href,
+                "url_imagem": url_imagem,
                 "loja": loja,
+                "href": href,
                 "preco": preco,
                 "updated": updated,
                 "key": key
