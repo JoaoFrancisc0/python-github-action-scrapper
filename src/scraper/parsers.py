@@ -28,7 +28,7 @@ def parse_produtos_amazon(page, timeout):
     resultados = []
     
     try:
-        page.wait_for_selector("[class='s-main-slot s-result-list s-search-results sg-row']", timeout=10000)
+        page.wait_for_selector("[role='listitem'][data-component-type='s-search-result']", timeout=10000)
     except Exception:
         logging.warning("O container de resultados não foi encontrado a tempo.")
         return []
