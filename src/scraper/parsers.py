@@ -33,7 +33,7 @@ def parse_produtos_amazon(page, timeout):
         logging.warning("O container de resultados não foi encontrado a tempo.")
         return []
 
-    items = page.locator("[class='a-section a-spacing-small a-spacing-top-small']").all()
+    items = page.locator("[role='listitem'][data-component-type='s-search-result']").all()
     
     for item in items:
         try:
