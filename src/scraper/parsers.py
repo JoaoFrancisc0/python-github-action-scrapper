@@ -1,5 +1,5 @@
 import logging
-from utils.helpers import tratar_nome, tratar_plataforma, tratar_href, tratar_url_imagem, tratar_preco, tratar_updated, tratar_key
+from utils.formatters import tratar_nome, tratar_plataforma, tratar_href, tratar_url_imagem, tratar_preco, tratar_updated, tratar_key
 from utils.product_logic import remover_duplicatas
 
 def scrap_lista_produtos(page, paginas):
