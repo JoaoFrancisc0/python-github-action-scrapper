@@ -1,35 +1,6 @@
 import unicodedata, re
 from datetime import datetime
-
-PLATAFORMAS = {
-    "PlayStation 4": ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4", "playstation_4"],
-    "PlayStation 5": ["ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5", "playstation_5"]
-}
-
-# Melhorar a filtragem, primeiro trocar cada "-" por " ", dar split, remover espaços multiplos e separar por espaço
-# Remover "para" no inicio ou no final depois da filtragem
-FILTRO = ["ps4", "playstation4", "playstation 4", "playstation-4", "play station4", "play station 4", "play station-4",
-          "ps5", "playstation5", "playstation 5", "playstation-5", "play station5", "play station 5", "play station-5",
-          "edicao padrao", "padrao", "edicao standard", "edition standard", "standard edition", "standardedition", 
-          "physical edition", "midia fisica", "versao fisica", "edicao fisica", "fisica", "fisico", "lacrado", "wireless", "controller", 
-          "jogo", "video game", "compativel com", "playstation", "hits", " -", "- ", "sony", 
-          "portugues", "pt-br", "pronta entrega"]
-
-BLACK_LIST = ["suporte", "ventoinha", "base", "grip", "joystick", "silicone", "carregador", "carregamento", "limpeza", "protector", "resfriamento",
-              "capa", "protetora", "usb", "transporte", "card", "charging", "carrying", "reposicao", "botoes", "thumbsticks", "adaptador",
-              "gaming", "paddles", "replacement", "cabo", "cooler", "estojo", "waterproof", "armazenamento", "display", "buttons", "pelicula",
-              "nintendo", "switch", "playstation 3", "playstation 2", "playstation 1", "ps3", "ps2", "ps1", "psp", "ps vita", "xbox", "tablet", "laptop"]
-
-def remover_duplicatas(produtos):
-    menores = {}
-
-    for p in produtos:
-        chave = (p["nome"], p["plataforma"])
-
-        if chave not in menores or p["preco"] < menores[chave]["preco"]:
-            menores[chave] = p
-
-    return list(menores.values())
+from utils.constants import *
 
 def normalizar(texto):
     '''a-z, 0-9, espaço, -'''
