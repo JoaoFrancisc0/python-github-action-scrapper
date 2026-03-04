@@ -72,8 +72,20 @@ def tratar_plataforma(texto_nome, texto_plataforma="Sem Sistema Operacional"):
                         return 5
         return 1 # == "Sem Sistema Operacional"
 
-def tratar_href(texto_href_cru, loja_url=""):
-    texto_href = loja_url + texto_href_cru
+def tratar_href(texto_href_cru, loja):
+    match loja:
+        case 1:
+            identificador = "/".join(texto_href_cru.split('/')[2:4])
+            texto_href = "https://www.amazon.com.br/" + identificador
+
+        case 2:
+            identificador = "/".join(texto_href_cru.split('/')[4:6])
+            identificador = identificador.split('?')[0]
+            texto_href = "https://www.mercadolivre.com.br/" + identificador
+
+        case _:
+            texto_href = "https://www.google.com"
+
     return texto_href
 
 def tratar_key(texto_nome, texto_plataforma, texto_loja):
