@@ -88,6 +88,10 @@ def tratar_href(texto_href_cru, loja):
 
     return texto_href
 
+def tratar_url_imagem(texto_url_imagem_cru):
+    texto_url_imagem = texto_url_imagem_cru
+    return texto_url_imagem
+
 def tratar_key(texto_nome, texto_plataforma, texto_loja):
     if not texto_nome or not texto_plataforma or not texto_loja:
         return None

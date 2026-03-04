@@ -75,7 +75,7 @@ def insert_collection2(data: list[dict]):
         return
 
     new_data = copy.deepcopy(data)
-    atributos_remover = {"nome", "plataforma", "loja", "url"}
+    atributos_remover = {"nome", "plataforma", "loja", "href", "url_imagem"}
 
     for item in new_data:
         for attr in atributos_remover:
@@ -114,7 +114,7 @@ def upsert_collection3(data: list[dict]):
         return
     
     new_data = copy.deepcopy(data)
-    atributos_remover = {"nome", "plataforma", "loja", "url"}
+    atributos_remover = {"nome", "plataforma", "loja", "href", "url_imagem"}
 
     for item in new_data:
         for attr in atributos_remover:
