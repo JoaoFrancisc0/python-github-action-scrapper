@@ -1,8 +1,19 @@
-import logging
+import logging, random
 import pandas as pd
-import os
 from playwright.sync_api import sync_playwright
 from scraper.parsers import scrap_lista_produtos, scrap_lista_produtos_ml
+
+USER_AGENTS = [
+    # Chrome Windows
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.110 Safari/537.36",
+    
+    # Chrome Linux
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    
+    # Chrome Mac
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+]
 
 logging.basicConfig(level=logging.INFO)
 
@@ -20,10 +31,12 @@ def extrair_dados():
 
         # browser = p.chromium.launch(headless=True, proxy=proxy_config)
 
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
+
+        user_agent_random = random.choice(USER_AGENTS)
 
         context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+            user_agent=user_agent_random
         )
         
         page = context.new_page()
