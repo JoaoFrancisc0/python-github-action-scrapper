@@ -130,11 +130,10 @@ def avancar_pagina_ml(page):
 def parse_produtos_ml(page, timeout):
     resultados = []
     
-    # try:
-    #     page.wait_for_selector("[class='s-main-slot s-result-list s-search-results sg-row']", timeout=10000)
-    # except Exception:
-    #     logging.warning("O container de resultados não foi encontrado a tempo.")
-    #     return []
+    try:
+        page.wait_for_selector(".ui-search-layout__item", timeout=10000)
+    except Exception:
+        logging.warning("O container de resultados não foi encontrado a tempo.")
 
     items = page.locator(".ui-search-layout__item").all()
     
