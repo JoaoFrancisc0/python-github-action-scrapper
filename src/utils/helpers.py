@@ -56,18 +56,21 @@ def tratar_nome(texto_nome):
     return nome_tratado
 
 def tratar_plataforma(texto_nome, texto_plataforma="Sem Sistema Operacional"):
-    if texto_plataforma == "Sem Sistema Operacional":
+    if texto_plataforma in PLATAFORMAS.get("PlayStation 4", []):
+        return 4
+    elif texto_plataforma in PLATAFORMAS.get("PlayStation 5", []):
+        return 5
+    # Tratamento para quando plataforma não é declarada
+    else:
         nome_tratado = normalizar(texto_nome)
         for plataforma, valores in PLATAFORMAS.items():
             for v in valores:
                 if v in nome_tratado:
-                    return plataforma
-        return texto_plataforma
-    elif texto_plataforma == "PlayStation 4" or texto_plataforma == "PlayStation 5":
-        texto_plataforma = texto_plataforma.replace(" ", "-")
-        return texto_plataforma
-    else:
-        return None
+                    if plataforma == "PlayStation 4":
+                        return 4
+                    elif plataforma == "PlayStation 5":
+                        return 5
+        return 1 # == "Sem Sistema Operacional"
 
 def tratar_href(texto_href_cru, loja_url=""):
     texto_href = loja_url + texto_href_cru
