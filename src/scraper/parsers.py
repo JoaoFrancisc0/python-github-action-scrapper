@@ -49,7 +49,17 @@ def parse_produtos_amazon(page, timeout):
                 sub_items.append(secondary_item)
 
             for sub_item in sub_items:
-                nome_cru = item.locator("h2 span").inner_text(timeout=timeout)
+                # Depois tirar desse loop os atributos que serão repetidos para cada subitem
+                try:
+                    nome_cru = item.locator("h2 span").first.inner_text(timeout=timeout)
+                except:
+                    logging.error(f"Erro ao extrair nome")
+                    raise
+                try:
+                    url_imagem_cru = item.locator("[class='s-image']").first.get_attribute("src")
+                except:
+                    logging.error(f"Erro ao extrair url_imagem")
+                    raise
                 try:
                     # Verifica se tem a Plataforma, se tiver pega o nome e o href, caso nao ele pega o href posteriormente
                     plataforma_element = sub_item.locator("[class='a-size-base a-link-normal s-underline-text s-underline-link-text null s-link-style a-text-bold']")
@@ -61,8 +71,11 @@ def parse_produtos_amazon(page, timeout):
                         href_cru = item.locator("[class='a-link-normal s-line-clamp-2 puis-line-clamp-3-for-col-4-and-8 s-link-style a-text-normal']").get_attribute("href", timeout=timeout)
                     except:
                         href_cru = ""
-                preco_cru = sub_item.locator("[class='a-offscreen']").first.inner_text(timeout=timeout)
-
+                try:
+                    preco_cru = sub_item.locator("[class='a-offscreen']").first.inner_text(timeout=timeout)
+                except:
+                    logging.error(f"Erro ao extrair preco")
+                    raise
                 nome = tratar_nome(nome_cru)
                 plataforma = tratar_plataforma(nome_cru, plataforma_cru)
                 href = tratar_href(href_cru, "www.amazon.com.br")
@@ -83,12 +96,10 @@ def parse_produtos_amazon(page, timeout):
                     "updated": updated,
                     "key": key
                 }
-                
                 resultados.append(dados)
-        except Exception as e:
-            # Se um item falhar, logamos o erro mas continuamos para o próximo
-            logging.error(f"Erro ao extrair dados de um item específico: {e}")
+        except:
             continue
+    logging.info(f"Produtos coletados na página: {len(resultados)}")
     return resultados
 
 def scrap_lista_produtos_ml(page, paginas):
@@ -127,8 +138,21 @@ def parse_produtos_ml(page, timeout):
     
     for item in items:
         try:
-            nome_cru = item.locator(".poly-component__title").first.inner_text(timeout=timeout)
-            preco_cru = item.locator(".andes-money-amount__fraction").first.inner_text(timeout=timeout)
+            try:
+                nome_cru = item.locator(".poly-component__title").first.inner_text(timeout=timeout)
+            except:
+                logging.error(f"Erro ao extrair nome")
+                raise
+            try:
+                url_imagem_cru = item.locator("[class='poly-component__picture']").first.get_attribute("src")
+            except:
+                logging.error(f"Erro ao extrair url_imagem")
+                raise
+            try:
+                preco_cru = item.locator(".andes-money-amount__fraction").first.inner_text(timeout=timeout)
+            except:
+                logging.error(f"Erro ao extrair preco")
+                raise
 
             try:
                 href_cru = item.locator(".poly-component__title").first.get_attribute("href", timeout=timeout)
@@ -155,10 +179,8 @@ def parse_produtos_ml(page, timeout):
                 "updated": updated,
                 "key": key
             }
-            
             resultados.append(dados)
-        except Exception as e:
-            # Se um item falhar, logamos o erro mas continuamos para o próximo
-            logging.error(f"Erro ao extrair dados de um item específico: {e}")
+        except:
             continue
+    logging.info(f"Produtos coletados na página: {len(resultados)}")
     return resultados
