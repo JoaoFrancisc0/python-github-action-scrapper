@@ -1,12 +1,13 @@
 import re
 from datetime import datetime
-from utils.text_utils import normalizar, contem_blacklist, remover_expressoes, remover_palavras, remover_palavras_borda
+from utils.text_utils import normalizar, padronizar, contem_blacklist, remover_expressoes, remover_palavras, remover_palavras_borda
 from utils.constants import PLATAFORMAS
 
 def tratar_nome(texto_nome):
     nome_normalizado = normalizar(texto_nome)
     if contem_blacklist(nome_normalizado): return None
-    nome_sem_expressoes = remover_expressoes(nome_normalizado)
+    nome_padronizado = padronizar(nome_normalizado)
+    nome_sem_expressoes = remover_expressoes(nome_padronizado)
     nome_filtrado = remover_palavras(nome_sem_expressoes)
     nome_tratado = remover_palavras_borda(nome_filtrado)
     return nome_tratado
