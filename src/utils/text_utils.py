@@ -1,5 +1,5 @@
 import unicodedata, re
-from utils.constants import REMOVER_EXPRESSOES, REMOVER_PALAVRAS, REMOVER_PALAVRAS_BORDA, BLACKLIST_EXPRESSOES, BLACKLIST_PALAVRAS
+from utils.constants import PADRONIZAR_EXPRESSOES, PADRONIZAR_PALAVRAS, REMOVER_EXPRESSOES, REMOVER_PALAVRAS, REMOVER_PALAVRAS_INICIO, REMOVER_PALAVRAS_FIM, BLACKLIST_EXPRESSOES, BLACKLIST_PALAVRAS
 
 def normalizar(texto):
     '''a-z, 0-9, espaço'''
@@ -9,6 +9,18 @@ def normalizar(texto):
     texto = re.sub(r"[^a-z0-9\s]", "", texto)
     texto = re.sub(r"\s+", " ", texto) # une multiplos espaços
     return texto
+
+def padronizar(texto):
+    for expr, destino in PADRONIZAR_EXPRESSOES.items():
+        texto = texto.replace(expr, destino)
+
+    palavras = texto.split()
+    resultado = []
+
+    for palavra in palavras:
+        resultado.append(PADRONIZAR_PALAVRAS.get(palavra, palavra))
+
+    return " ".join(resultado)
 
 def remover_expressoes(texto):
     for exp in REMOVER_EXPRESSOES:
