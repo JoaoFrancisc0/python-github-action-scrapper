@@ -1,7 +1,7 @@
 from scraper.engine import extrair_dados
 from utils.product_logic import comparar_preco
 from database import upsert_collection1, insert_collection2, upsert_collection3, read_collection3
-import logging, time
+import logging, time, os
 from dotenv import load_dotenv
 
 def storage_data(dados):
@@ -16,7 +16,9 @@ def run():
     logging.info("Iniciando o processo de scraping...")
     
     # 1. Coleta os dados usando o Playwright
-    dados = extrair_dados()
+    urls = [os.getenv("URL_1"), os.getenv("URL_2")]
+
+    dados = extrair_dados(urls)
     
     # 2. Se houver dados, envia para o MongoDB
     if dados:
