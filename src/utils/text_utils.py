@@ -39,10 +39,10 @@ def remover_palavras(texto):
 def remover_palavras_borda(texto):
     palavras = texto.split()
 
-    while palavras and palavras[0] in REMOVER_PALAVRAS_BORDA:
+    while palavras and palavras[0] in REMOVER_PALAVRAS_INICIO:
         palavras.pop(0)
         
-    while palavras and palavras[-1] in REMOVER_PALAVRAS_BORDA:
+    while palavras and palavras[-1] in REMOVER_PALAVRAS_FIM:
         palavras.pop()
         
     return " ".join(palavras)
