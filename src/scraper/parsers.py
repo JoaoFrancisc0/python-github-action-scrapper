@@ -2,16 +2,18 @@ import logging
 from utils.formatters import tratar_nome, tratar_plataforma, tratar_href, tratar_url_imagem, tratar_preco, tratar_updated, tratar_key
 from utils.product_logic import remover_duplicatas
 
-def scrap_lista_produtos(page, paginas=10000):
-    paginas-=1
+def scrap_lista_produtos(page):
+    count = 0
     resultados_total = []
-    while(paginas > 0):
+    while(count <= 3):
         resultados = parse_produtos_amazon(page, timeout=1000)
+        # Para a busca caso em 3 paginas seguidas não encontre um jogo válido
+        if len(resultados) == 0: count+=1
+        else: count=0
         resultados_total.extend(resultados)
         if not avancar_pagina(page):
             if not avancar_pagina(page):
                return resultados_total
-        # paginas-=1
     resultado_tratado = remover_duplicatas(resultados_total)
     return resultado_tratado
 
