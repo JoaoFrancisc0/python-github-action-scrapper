@@ -1,6 +1,13 @@
 import unicodedata, re
 from utils.constants import PADRONIZAR_EXPRESSOES, PADRONIZAR_PALAVRAS, REMOVER_EXPRESSOES, REMOVER_PALAVRAS, REMOVER_PALAVRAS_INICIO, REMOVER_PALAVRAS_FIM, BLACKLIST_EXPRESSOES, BLACKLIST_PALAVRAS
 
+_REGEX_REMOVER_EXPRESSOES = re.compile(
+    r'\b(' + '|'.join(re.escape(e) for e in REMOVER_EXPRESSOES) + r')\b'
+)
+_REGEX_BLACKLIST_EXPRESSOES = re.compile(
+    r'\b(' + '|'.join(re.escape(e) for e in BLACKLIST_EXPRESSOES) + r')\b'
+)
+
 def normalizar(texto):
     '''a-z, 0-9, espaço'''
     texto = texto.lower()
@@ -23,9 +30,7 @@ def padronizar(texto):
     return " ".join(resultado)
 
 def remover_expressoes(texto):
-    for exp in REMOVER_EXPRESSOES:
-        padrao = rf"\b{re.escape(exp)}\b"
-        texto = re.sub(padrao, "", texto)
+    texto = _REGEX_REMOVER_EXPRESSOES.sub("", texto)
     return re.sub(r"\s+", " ", texto).strip()
 
 def remover_palavras(texto):
@@ -48,11 +53,7 @@ def remover_palavras_borda(texto):
     return " ".join(palavras)
 
 def contem_blacklist_expressoes(texto):
-    for exp in BLACKLIST_EXPRESSOES:
-        padrao = rf"\b{re.escape(exp)}\b"
-        if re.search(padrao, texto):
-            return True
-    return False
+    return bool(_REGEX_BLACKLIST_EXPRESSOES.search(texto))
 
 def contem_blacklist_palavras(texto):
     palavras = texto.split()

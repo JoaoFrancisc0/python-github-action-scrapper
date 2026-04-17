@@ -13,7 +13,7 @@ def scrap_lista_produtos(page):
         resultados_total.extend(resultados)
         if not avancar_pagina(page):
             if not avancar_pagina(page):
-               return resultados_total
+               break
     resultado_tratado = remover_duplicatas(resultados_total)
     return resultado_tratado
 
@@ -114,8 +114,7 @@ def scrap_lista_produtos_ml(page, paginas=10000):
         resultados_total.extend(resultados)
         if not avancar_pagina_ml(page):
             if not avancar_pagina_ml(page):
-               return resultados_total
-        # paginas-=1
+               break
     resultado_tratado = remover_duplicatas(resultados_total)
     return resultado_tratado
 
