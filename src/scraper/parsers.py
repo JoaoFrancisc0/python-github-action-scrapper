@@ -5,9 +5,9 @@ from utils.product_logic import remover_duplicatas
 def scrap_lista_produtos(page):
     count = 0
     resultados_total = []
-    while(count <= 3):
+    while(count <= 4):
         resultados = parse_produtos_amazon(page, timeout=1000)
-        # Para a busca caso em 3 paginas seguidas não encontre um jogo válido
+        # Para a busca caso em 5 paginas seguidas não encontre um jogo válido
         if len(resultados) == 0: count+=1
         else: count=0
         resultados_total.extend(resultados)
